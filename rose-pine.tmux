@@ -290,6 +290,9 @@ main() {
     local show_session
     readonly show_session=" #[fg=$thm_text]$current_session_icon #[fg=$thm_text]#S "
 
+    local show_directory
+    readonly show_directory="#[fg=$thm_subtle]$current_folder_icon #[fg=$thm_rose]#{b:pane_current_path} "
+
     local show_user
     readonly show_user="#[fg=$thm_iris]#(whoami)#[fg=$thm_subtle]$username_icon"
 
@@ -298,9 +301,6 @@ main() {
 
     local show_date_time
     readonly show_date_time="#[fg=$thm_foam]$date_time"
-
-    local show_directory
-    readonly show_directory="$spacer#[fg=$thm_subtle]$current_folder_icon #[fg=$thm_rose]#{b:pane_current_path} "
 
     local show_directory_in_window_status
     # BUG: It doesn't let the user pass through a custom window name
@@ -377,6 +377,10 @@ main() {
         unset_option window-status-current-format
     fi
 
+    if [[ "$directory" == "on" ]]; then
+        right_column=$right_column$show_directory
+    fi
+
     if [[ "$user" == "on" ]]; then
         right_column=$right_column$show_user
     fi
@@ -387,10 +391,6 @@ main() {
 
     if [[ "$date_time" != "" ]]; then
         right_column=$right_column$show_date_time
-    fi
-
-    if [[ "$directory" == "on" ]]; then
-        right_column=$right_column$show_directory
     fi
 
     # The append and prepend sections are for inter-plugin compatibility
