@@ -458,7 +458,14 @@ main() {
     # tmux integrated modes
 
     setw clock-mode-colour "${thm_love}"
-    setw mode-style "fg=${thm_gold}"
+
+    local selection_fg
+    selection_fg="$(get_tmux_option "@rose_pine_selection_fg" "$thm_gold")"
+
+    local selection_bg
+    selection_bg="$(get_tmux_option "@rose_pine_selection_bg" "$thm_subtle")"
+
+    setw mode-style "fg=${selection_fg},bg=${selection_bg}"
 
     # Call everything to action
 
